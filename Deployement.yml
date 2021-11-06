@@ -6,20 +6,19 @@ metadata:
   labels:
    app : myapp
    type : front-end
+spec:
+ - template :
+   metadata:
+    name : myapp-pod
+    labels : 
+      app : myapp
+      type : front-end
    spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: hello
-  template:
-    metadata:
-      labels:
-        app: hello
-    spec:
-      containers:
-      - name: hello
-        image: azmytc/zimatc:latest
-        ports:
-        - containerPort: 3000
-
-  
+     containers:
+     - name : nginx-container
+       image : nginx
+       
+replicas: 3
+selector :
+ matchLabels:
+  type : front-end

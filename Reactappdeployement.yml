@@ -1,25 +1,36 @@
-apiVersion: v1
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: myapp-deployment
-  namespace : dev
-  labels:
-   app : myapp
-   type : front-end
-   spec:
-  replicas: 3
+  name: react-deploymentssss
+spec:
   selector:
     matchLabels:
-      app: hello
+      app: react
+  replicas: 2 # tells deployment to run 1 pods matching the template
   template:
     metadata:
       labels:
-        app: hello
+        app: react
     spec:
       containers:
-      - name: hello
-        image: azmytc/zimatc:latest
-        ports:
-        - containerPort: 3000
+        - name: react
+          image: azmytc/zimatc:latest
+          tty: true
+          ports:
+            - containerPort: 3000
+---
+# https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
+kind: Service
+apiVersion: v1
+metadata:
+  name: react-servicessss
+spec:
+  selector:
+    app: react
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 3000
+  type: LoadBalancer
 
   
